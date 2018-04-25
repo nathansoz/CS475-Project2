@@ -21,14 +21,14 @@ Project2::Body Bodies[NUMBODIES];
 using namespace Project2;
 
 
-void doOuterLoop(int i)
+void doOuterLoop(int i, enum ParallelismType parallelismType)
 {
 	float fx = 0.;
 	float fy = 0.;
 	float fz = 0.;
 	Body *bi = &Bodies[i];
 
-	switch(ParallelismType)
+	switch(parallelismType)
 	{
 		case ParallelismType::FineStatic:
 		{
@@ -110,18 +110,18 @@ void doOuterLoop(int i)
 
 }
 
-void doWork()
+void doWork(enum ParallelismType parallelismType)
 {
 	for (int t = 0; t < NUMSTEPS; t++)
 	{
-		switch (ParallelismType)
+		switch (parallelismType)
 		{
 		case ParallelismType::CoarseStatic:
 		{
 			#pragma omp parallel for schedule(static)
 			for (int i = 0; i < NUMBODIES; i++)
 			{
-				doOuterLoop(i);
+				doOuterLoop(i, parallelismType);
 			}
 			break;
 		}
@@ -130,7 +130,7 @@ void doWork()
 			#pragma omp parallel for schedule(dynamic)
 			for (int i = 0; i < NUMBODIES; i++)
 			{
-				doOuterLoop(i);
+				doOuterLoop(i, parallelismType);
 			}
 			break;
 		}
@@ -138,7 +138,7 @@ void doWork()
 		{
 			for (int i = 0; i < NUMBODIES; i++)
 			{
-				doOuterLoop(i);
+				doOuterLoop(i, parallelismType);
 			}
 			break;
 		}
@@ -181,7 +181,7 @@ void doTiming(int numThreads, enum ParallelismType parallelismType)
 		};
 
 		double time0 = omp_get_wtime();
-		doWork();
+		doWork(parallelismType);
 		double time1 = omp_get_wtime();
 		double megabodiesPerSecond = (NUMBODIES*NUMBODIES*NUMSTEPS) / (time1 - time0) / 1000000.;
 
