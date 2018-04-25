@@ -4,6 +4,7 @@
     #include <sys/types.h>
     #include <unistd.h>
     #include <algorithm>
+    #include <math.h>
 #endif
 
 using namespace Project2;

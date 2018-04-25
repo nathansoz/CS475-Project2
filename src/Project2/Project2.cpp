@@ -11,7 +11,7 @@ const float TIMESTEP = 1.0; // secs
 
 auto ParallelismType = ParallelismType::CoarseDynamic;
 
-#define NUMBODIES         100
+#define NUMBODIES         500
 #define NUMSTEPS          200
 #define NUMTRIES          100
 #define NUMTHREADS        4
@@ -206,7 +206,7 @@ int main()
 	std::cerr << "OpenMP is not supported here -- sorry." << std::endl;
 	return 1;
 #endif
-	std::vector<int> threadsToTest = { 1, 2, 4 };
+	std::vector<int> threadsToTest = { 1, 2, 4, 8, 16 };
 	std::vector<enum ParallelismType> parallelismTypes = { ParallelismType::CoarseStatic, ParallelismType::CoarseDynamic, ParallelismType::FineStatic, ParallelismType::FineDynamic };
 	
 	int numProcessors = omp_get_num_procs();
