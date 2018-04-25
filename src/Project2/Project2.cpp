@@ -11,9 +11,9 @@ const float TIMESTEP = 1.0; // secs
 
 auto ParallelismType = ParallelismType::CoarseDynamic;
 
-#define NUMBODIES         500
+#define NUMBODIES         100
 #define NUMSTEPS          200
-#define NUMTRIES          100
+#define NUMTRIES          1
 #define NUMTHREADS        4
 
 Project2::Body Bodies[NUMBODIES];
